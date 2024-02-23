@@ -1,0 +1,32 @@
+<h1>Lists of movies</h1>
+<ul>
+  <li><%= link_to "Add a movie", new_list_bookmark_path(params[:id]) %></li>
+  <li><%= link_to "Back to list", lists_path %></li>
+</ul>
+
+<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
+Delete a movie</button>
+
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Delete a movie</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <% @list.movies.each do |movie|%>
+          <li><%= movie.title  %> <%= link_to "Delete this movie", bookmark_path(Bookmark.find_by(movie_id: movie)), data: { turbo_method: :delete } %></li>
+        <% end %>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+<% @list.movies.each do |movie| %>
+ <ul>
+  <li> <%= movie.title  %> <%= movie.overview  %><%= image_tag(movie.poster_url)  %></li>
+ </ul>
+<% end  %>
